@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from register.forms import RegisterForm
+from django.contrib.auth import logout
 
 # Create your views here.
 def register(response):
@@ -11,3 +12,8 @@ def register(response):
     else:
         form = RegisterForm()
     return render(response,"register/register.html", {"form":form})
+
+def LogOut(request):
+    logout(request)
+    return redirect("/")
+    
