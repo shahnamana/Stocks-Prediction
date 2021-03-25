@@ -1,9 +1,19 @@
 {% extends "main/base.html" %}
 {% block title %} View Stocks {% endblock %}
 {% block content %}
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{{message.tags}} m-2">
+      {{message}}
+    </div>
+  {% endfor%}
+{% endif %}
 <div class="topnav">
-  <input type="text" placeholder="Search..">
-  <button type="button" onclick="alert('Hello world!')"><i class="bi bi-search"></i></i></button>
+  
+  <form class="form-inline my-2 my-lg-3">
+    <input class="form-control mr-sm-4" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
 </div>
 <br>
 <table class="table">
@@ -15,33 +25,19 @@
     </tr>
   </thead>
   <tbody>
+    {% for i in sl%}
     <tr>
-      <th scope="row">1</th>
-      <td>SBI</td>
-      <td><button type="button" onclick="alert('Hello world!')">Add</button></td>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{i}}</td>
+      {%if user.is_authenticated %}
+      <td>
+        <a href="/addstocks/{{i}}"><button type="button" class="btn btn-dark"><i class="fas fa-plus-square"></i></button></a>
+      </td>
+      {%endif%}
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>HDFC</td>
-      <td><button type="button" onclick="alert('Hello world!')">Add</button></td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>RELIANCE</td>
-      <td><button type="button" onclick="alert('Hello world!')">Add</button></td>
-    </tr>
-    <tr>
-      <th scope="row">4</th>
-      <td>TATA MOTORS</td>
-      <td><button type="button" onclick="alert('Hello world!')">Add</button></td>
-    </tr>
-    <tr>
-      <th scope="row">5</th>
-      <td>LUPIN LIMITED</td>
-      <td><button type="button" onclick="alert('Hello world!')">Add</button></td>
-    </tr>
+    {% endfor %}
+    
   </tbody>
 </table>
-
 
 {% endblock %}

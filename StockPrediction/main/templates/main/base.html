@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Font Awesome Icons</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <title>{% block title %}{% endblock %}</title>
@@ -26,17 +25,23 @@
             <li class="nav-item">
               <a class="nav-link" href="/stockslist/">View Stocks</a>
             </li>
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="/portfolio/">My Portfolio</a>
+              </li>
+            {% endif %}
             
           </ul>
           {% if user.is_authenticated %}
             <div class="nav-item my-2 my-lg-0">
               <span class="px-2">{{user.username}}</span>
-              <span class="px-2"><a href="/logout">Log Out</a></span>
+              <span class="px-2"><a href="/logout"><span class="px-1"><i class="fas fa-sign-out-alt"></i></span>Log Out</a></span>
             </div>
           {% else %}
             <div class="nav-item my-2 my-lg-0">
-              <span class="px-2"><a href="/login/">Log In</a></span>
-              <span class="px-2"><a href="/register/">Register</a></span>
+              <span class="px-2"><a href="/login/"><span class="px-1"><i class="far fa-user"></i></span>Log In</a></span>
+              <span class="px-1">|</span>
+              <span class="px-2"><a href="/register/"><span class="px-1"><i class="fas fa-user-plus"></i></span>Sign Up</a></span>
             </div>
           {% endif %}
         </div>
