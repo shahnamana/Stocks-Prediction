@@ -1,2 +1,2 @@
 # Stocks-Prediction
-Stock Market Prediciton Django app. Done for Course Mini Project (Semester 6)
+Stock Market Prediction Django app. Done for Course Mini Project (Semester 6)
