@@ -1,5 +1,47 @@
 {% extends "main/base.html" %}
 {% block title %} View Stocks {% endblock %}
 {% block content %}
-Stocks will be listed here
+<div class="topnav">
+  <input type="text" placeholder="Search..">
+  <button type="button" onclick="alert('Hello world!')"><i class="bi bi-search"></i></i></button>
+</div>
+<br>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">S.NO.</th>
+      <th scope="col">Stock Name</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>SBI</td>
+      <td><button type="button" onclick="alert('Hello world!')">Add</button></td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>HDFC</td>
+      <td><button type="button" onclick="alert('Hello world!')">Add</button></td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>RELIANCE</td>
+      <td><button type="button" onclick="alert('Hello world!')">Add</button></td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>TATA MOTORS</td>
+      <td><button type="button" onclick="alert('Hello world!')">Add</button></td>
+    </tr>
+    <tr>
+      <th scope="row">5</th>
+      <td>LUPIN LIMITED</td>
+      <td><button type="button" onclick="alert('Hello world!')">Add</button></td>
+    </tr>
+  </tbody>
+</table>
+
+
 {% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="topnav">
+  <input type="text" placeholder="Search..">
+  <button type="button" onclick="alert('Hello world!')"><i class="fas fa-search"></i></button>
+</div>
+<br>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">S.NO.</th>
+      <th scope="col">Stock Name</th>
+      <th scope="col">Currency</th>  
+      <th scope="col">Price</th>
+      <th scope="col">Total number of stocks</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>MAHINDRA</td>
+      <td>Rupees</td> 
+      <td>1,235</td>
+      <td>200</td>
+      <td><button type="button" onclick="alert('Hello world!')">Predict</button></td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>AURBINDO</td>
+      <td>Rupees</td> 
+      <td>1,235</td>
+      <td>200</td>
+      <td><button type="button" onclick="alert('Hello world!')">Predict</button></td>
+    </tr>
+  </tbody>
+</table>
+{% endblock %}
