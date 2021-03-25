@@ -21,7 +21,7 @@
     <tr>
       <th scope="col">S.NO.</th>
       <th scope="col">Stock Name</th>
-      <th scope="col"></th>
+      <th scope="col">Add to portfolio</th>
     </tr>
   </thead>
   <tbody>
@@ -30,9 +30,14 @@
       <th scope="row">{{forloop.counter}}</th>
       <td>{{i}}</td>
       {%if user.is_authenticated %}
+     
       <td>
         <a href="/addstocks/{{i}}"><button type="button" class="btn btn-dark"><i class="fas fa-plus-square"></i></button></a>
       </td>
+      {% else %}
+        <td>
+          <a href="/login">Log in to add</a>
+        </td>
       {%endif%}
     </tr>
     {% endfor %}

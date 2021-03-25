@@ -10,7 +10,7 @@ def home(response):
     return render(response,"main/home.html")
 
 def stockslist(response):
-    stocklist=["SBI","HDFC","RELIANCE","TATA MOTORS"]
+    stocklist=["SBI","HDFC","RELIANCE","TATA MOTORS","AUROPHARMA"]
 
     return render(response, "main/stockslist.html",{"sl":stocklist})
 
