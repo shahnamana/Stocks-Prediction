@@ -4,4 +4,9 @@
 <div class="container pt-5">
     <center><h1>Home Page</h1></center>
 </div>
+<div>
+    {% for k, v in final_dict.items %}
+        {{k}} {{v}}<br/>
+    {%endfor%}
+</div>
 {% endblock %}
