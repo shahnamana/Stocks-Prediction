@@ -27,17 +27,19 @@ def stockslist(response):
     symbols=["SBIN","HDFC","RELIANCE","TATAMOTORS","AUROPHARMA"]
     stockPrices_dict={}
     temp={}
+    count=0
     for i in symbols:
         stockPrices_dict[i]={}
         temp=getLivePrices(i)
         # print(type(temp))
         # print(temp["lastPrice"])
-        # stockPrices_dict[i]["symbol"]=temp["symbol"]
+        stockPrices_dict[i]["symbol"]=stock_names[count]
         stockPrices_dict[i]["lastPrice"]=temp["lastPrice"]
         stockPrices_dict[i]["open"]=temp["open"]
         stockPrices_dict[i]["dayHigh"]=temp["dayHigh"]
         stockPrices_dict[i]["dayLow"]=temp["dayLow"]
         stockPrices_dict[i]["previousClose"]=temp["previousClose"]
+        count+=1;
     # print(stockPrices_dict)   
     # stockPrices_dict = dict(zip(stock_names, list(stockPrices_dict.values())))
     # stockPrices_dict=getLivePrices(symbols)
