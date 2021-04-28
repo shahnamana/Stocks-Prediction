@@ -17,6 +17,7 @@
     <tr>
       <th scope="col">S.NO.</th>
       <th scope="col">Stock Name</th>
+      <th scope="col">Current Price</th>
       <th scope="col">Remove</th>
       <th scope="col">Predict</th>
     </tr>
@@ -29,6 +30,19 @@
       
       <td>
         <a href="/removestocks/{{i}}"><button type="button" class="btn btn-danger"><i class="fas fa-minus-square"></i></button></a>
+      </td>
+      <td><button type="button" class="btn btn-primary"><a class="text-light" href="/makePredictions">Predict</a></button></td>
+    </tr>
+    {% endfor %}
+
+    {% for key,value in prices.items %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{key}}</td>
+      <td>{{value.lastPrice}}</td>
+      
+      <td>
+        <a href="/removestocks/{{key}}"><button type="button" class="btn btn-danger"><i class="fas fa-minus-square"></i></button></a>
       </td>
       <td><button type="button" class="btn btn-primary"><a class="text-light" href="/makePredictions">Predict</a></button></td>
     </tr>

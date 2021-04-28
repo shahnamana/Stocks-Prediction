@@ -19,34 +19,30 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">S.NO.</th>
-      <th scope="col">Stock Name</th>
-      <th scope="col">Current Price</th>
-      <th scope="col">Prev. Close</th>
-      <th scope="col">Open</th>
-      <th scope="col">Day High</th>
-      <th scope="col">Day Low</th>
-      <th scope="col">Add to portfolio</th>
+      <th valign="middle" scope="col"><center>S.NO.</center></th>
+      <th valign="middle" scope="col"><center>Stock Name</center></th>
+      <th valign="middle" scope="col"><center>Current Price</center></th>
+      <th valign="middle" scope="col"><center>Prev. Close</center></th>
+      <th valign="middle" scope="col"><center>Open</center></th>
+      <th valign="middle" scope="col"><center>Day High</center></th>
+      <th valign="middle" scope="col"><center>Day Low</center></th>
+      <th valign="middle" scope="col"><center>Add to portfolio</center></th>
     </tr>
   </thead>
   <tbody>
-    <!-- for p_id, p_info in people.items():
-    print("\nPerson ID:", p_id)
     
-    for key in p_info:
-        print(key + ':', p_info[key]) -->
-    {% for key,value in sl.items %}
+    {% for key,value in prices.items %}
     <tr>
-      <!-- <th scope="row">{{forloop.counter}}</th> -->
-      <td>{{i}}</td>
-      {% for key_1,value_1 in value %}
-        <td>{{key}} {{key_1}} {{value_1}}</td>
+      <th scope="row"><center>{{forloop.counter}}</center></th>
+      <td><center>{{key}}</center></td>
+      {% for key_1,value_1 in value.items %}
+        <td><center>{{value_1}}</center></td>
       {% endfor %}    
       
       {%if user.is_authenticated %}
      
       <td>
-        <a href="/addstocks/{{i}}"><button type="button" class="btn btn-dark"><i class="fas fa-plus-square"></i></button></a>
+        <center><a href="/addstocks/{{key}}"><button type="button" class="btn btn-dark"><i class="fas fa-plus-square"></i></button></a></center>
       </td>
       {% else %}
         <td>
