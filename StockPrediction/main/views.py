@@ -15,37 +15,37 @@ def home(response):
     return render(response,"main/home.html")
 
 def stockslist(response):
-    # stock_names=[
-    #     "State Bank of India (SBIN)", 
-    #     "Housing Development Finance Corporation Limited(HDFC)", 
-    #     "Reliance Industries Limited(RELIANCE)",
-    #     "Tata Motors Limited(TATAMOTORS)",
-    #     "Aurobindo Pharma Limited(AUROPHARMA)"
-    # ]
+    stock_names=[
+        "State Bank of India (SBIN)", 
+        "Housing Development Finance Corporation Limited(HDFC)", 
+        "Reliance Industries Limited(RELIANCE)",
+        "Tata Motors Limited(TATAMOTORS)",
+        "Aurobindo Pharma Limited(AUROPHARMA)"
+    ]
     
     # nums=[x+1 for x in range(len(stock_names))]
     symbols=["SBIN","HDFC","RELIANCE","TATAMOTORS","AUROPHARMA"]
-    # stockPrices_dict={}
-    # temp={}
-    # for i in symbols:
-    #     stockPrices_dict[i]={}
-    #     temp=getLivePrices(i)
-    #     # print(type(temp))
-    #     # print(temp["lastPrice"])
-    #     stockPrices_dict[i]["lastPrice"]=temp["lastPrice"]
-    #     stockPrices_dict[i]["open"]=temp["open"]
-    #     stockPrices_dict[i]["dayHigh"]=temp["dayHigh"]
-    #     stockPrices_dict[i]["dayLow"]=temp["dayLow"]
-    #     stockPrices_dict[i]["previousClose"]=temp["previousClose"]
-    # # print(stockPrices_dict)   
+    stockPrices_dict={}
+    temp={}
+    for i in symbols:
+        stockPrices_dict[i]={}
+        temp=getLivePrices(i)
+        # print(type(temp))
+        # print(temp["lastPrice"])
+        # stockPrices_dict[i]["symbol"]=temp["symbol"]
+        stockPrices_dict[i]["lastPrice"]=temp["lastPrice"]
+        stockPrices_dict[i]["open"]=temp["open"]
+        stockPrices_dict[i]["dayHigh"]=temp["dayHigh"]
+        stockPrices_dict[i]["dayLow"]=temp["dayLow"]
+        stockPrices_dict[i]["previousClose"]=temp["previousClose"]
+    # print(stockPrices_dict)   
     # stockPrices_dict = dict(zip(stock_names, list(stockPrices_dict.values())))
-    stockPrices_dict=getLivePrices(symbols)
+    # stockPrices_dict=getLivePrices(symbols)
     return render(response, "main/stockslist.html",{"prices":stockPrices_dict})
 
 def portfolio(response):
-    sl=list(Stock.objects.filter(investor=response.user).values_list("stock_name"))
-    sl = [i[0] for i in sl]
-    stockPrices_dict=getLivePrices(sl)
+    sl=Stock.objects.filter(investor=response.user)
+    
     return render(response, "main/portfolio.html",{"sl":sl})
 
 def addstocks(response,name):
@@ -111,32 +111,33 @@ def makePredictions(response):
     # final_dict = dict(zip(index_future_dates[-10:], pred))
     # return render(response, 'main/home.html', {'values':pred, 'final_dict':final_dict })
 
-def getLivePrices(symbols):
+def getLivePrices(name):
     nse=Nse()
+    q=nse.get_quote(name)
     # print(q)
-    stock_names={
-        "State Bank of India (SBIN)":"SBIN", 
-        "Housing Development Finance Corporation Limited(HDFC)":"HDFC", 
-        "Reliance Industries Limited(RELIANCE)":"RELIANCE",
-        "Tata Motors Limited(TATAMOTORS)":"TATAMOTORS",
-        "Aurobindo Pharma Limited(AUROPHARMA)":"AUROPHARMA",
-    }
-    stockPrices_dict={}
-    temp={}
-    for i in symbols:
-        stockPrices_dict[i]={}
-        temp=nse.get_quote(i)
-        # print(type(temp))
-        # print(temp["lastPrice"])
-        stockPrices_dict[i]["lastPrice"]=temp["lastPrice"]
-        stockPrices_dict[i]["open"]=temp["open"]
-        stockPrices_dict[i]["dayHigh"]=temp["dayHigh"]
-        stockPrices_dict[i]["dayLow"]=temp["dayLow"]
-        stockPrices_dict[i]["previousClose"]=temp["previousClose"]
-    new_temp=[]
-    for key,value in stock_names:
-        if value in symbols:
-            temp.append(key)
-    # print(stockPrices_dict)   
-    stockPrices_dict = dict(zip(new_temp, list(stockPrices_dict.values())))
-    return stockPrices_dict
+    # stock_names={
+    #     "State Bank of India (SBIN)":"SBIN", 
+    #     "Housing Development Finance Corporation Limited(HDFC)":"HDFC", 
+    #     "Reliance Industries Limited(RELIANCE)":"RELIANCE",
+    #     "Tata Motors Limited(TATAMOTORS)":"TATAMOTORS",
+    #     "Aurobindo Pharma Limited(AUROPHARMA)":"AUROPHARMA",
+    # }
+    # stockPrices_dict={}
+    # temp={}
+    # for i in symbols:
+    #     stockPrices_dict[i]={}
+    #     temp=nse.get_quote(i)
+    #     # print(type(temp))
+    #     # print(temp["lastPrice"])
+    #     stockPrices_dict[i]["lastPrice"]=temp["lastPrice"]
+    #     stockPrices_dict[i]["open"]=temp["open"]
+    #     stockPrices_dict[i]["dayHigh"]=temp["dayHigh"]
+    #     stockPrices_dict[i]["dayLow"]=temp["dayLow"]
+    #     stockPrices_dict[i]["previousClose"]=temp["previousClose"]
+    # new_temp=[]
+    # for key,value in stock_names:
+    #     if value in symbols:
+    #         temp.append(key)
+    # # print(stockPrices_dict)   
+    # stockPrices_dict = dict(zip(new_temp, list(stockPrices_dict.values())))
+    return q
