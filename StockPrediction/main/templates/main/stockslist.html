@@ -21,14 +21,28 @@
     <tr>
       <th scope="col">S.NO.</th>
       <th scope="col">Stock Name</th>
+      <th scope="col">Current Price</th>
+      <th scope="col">Prev. Close</th>
+      <th scope="col">Open</th>
+      <th scope="col">Day High</th>
+      <th scope="col">Day Low</th>
       <th scope="col">Add to portfolio</th>
     </tr>
   </thead>
   <tbody>
-    {% for i in sl%}
+    <!-- for p_id, p_info in people.items():
+    print("\nPerson ID:", p_id)
+    
+    for key in p_info:
+        print(key + ':', p_info[key]) -->
+    {% for key,value in sl.items %}
     <tr>
-      <th scope="row">{{forloop.counter}}</th>
+      <!-- <th scope="row">{{forloop.counter}}</th> -->
       <td>{{i}}</td>
+      {% for key_1,value_1 in value %}
+        <td>{{key}} {{key_1}} {{value_1}}</td>
+      {% endfor %}    
+      
       {%if user.is_authenticated %}
      
       <td>

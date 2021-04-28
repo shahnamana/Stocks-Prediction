@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Stock
 from statsmodels.tsa.arima_model import ARIMAResults
 from django.contrib import messages
+from nsetools import Nse
 import pandas as pd
 import datetime as dt
 
@@ -14,9 +15,32 @@ def home(response):
     return render(response,"main/home.html")
 
 def stockslist(response):
-    stocklist=["SBI","HDFC","RELIANCE","TATA MOTORS","AUROPHARMA"]
-
-    return render(response, "main/stockslist.html",{"sl":stocklist})
+    # stock_names=[
+    #     "State Bank of India (SBIN)", 
+    #     "Housing Development Finance Corporation Limited(HDFC)", 
+    #     "Reliance Industries Limited(RELIANCE)",
+    #     "Tata Motors Limited(TATAMOTORS)",
+    #     "Aurobindo Pharma Limited(AUROPHARMA)"
+    # ]
+    
+    # nums=[x+1 for x in range(len(stock_names))]
+    symbols=["SBIN","HDFC","RELIANCE","TATAMOTORS","AUROPHARMA"]
+    stockPrices_dict={}
+    temp={}
+    for i in symbols:
+        stockPrices_dict[i]={}
+        temp=getLivePrices(i)
+        # print(type(temp))
+        # print(temp["lastPrice"])
+        stockPrices_dict[i]["lastPrice"]=temp["lastPrice"]
+        stockPrices_dict[i]["open"]=temp["open"]
+        stockPrices_dict[i]["dayHigh"]=temp["dayHigh"]
+        stockPrices_dict[i]["dayLow"]=temp["dayLow"]
+        stockPrices_dict[i]["previousClose"]=temp["previousClose"]
+    print(stockPrices_dict)   
+    
+    
+    return render(response, "main/stockslist.html",{"prices":stockPrices_dict})
 
 def portfolio(response):
     sl=Stock.objects.filter(investor=response.user)
@@ -84,4 +108,9 @@ def makePredictions(response):
     
     # final_dict = dict(zip(index_future_dates[-10:], pred))
     # return render(response, 'main/home.html', {'values':pred, 'final_dict':final_dict })
-        
+
+def getLivePrices(name):
+    nse=Nse()
+    q=nse.get_quote(name)
+    # print(q)
+    return q
