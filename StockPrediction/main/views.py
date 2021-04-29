@@ -5,8 +5,11 @@ from statsmodels.tsa.arima_model import ARIMAResults
 from django.contrib import messages
 from nsetools import Nse
 from json import dumps
+# from graphos.sources.simple import SimpleDataSource
+# from graphos.renderers.yui import LineChart
 from graphos.sources.simple import SimpleDataSource
-from graphos.renderers.yui import LineChart
+from graphos.renderers.gchart import LineChart
+# from graphos.renderers import flot
 import pandas as pd
 import datetime as dt
 
@@ -19,13 +22,13 @@ def home(response):
 
 def stockslist(response):
     stock_names=[
-        "State Bank of India (SBIN)", 
-        "Housing Development Finance Corporation Limited(HDFC)", 
+        "State Bank of India (SBIN)",
+        "Housing Development Finance Corporation Limited(HDFC)",
         "Reliance Industries Limited(RELIANCE)",
         "Tata Motors Limited(TATAMOTORS)",
         "Aurobindo Pharma Limited(AUROPHARMA)"
     ]
-    
+
     # nums=[x+1 for x in range(len(stock_names))]
     symbols=["SBIN","HDFC","RELIANCE","TATAMOTORS","AUROPHARMA"]
     stockPrices_dict={}
@@ -43,14 +46,14 @@ def stockslist(response):
         stockPrices_dict[i]["dayLow"]=temp["dayLow"]
         stockPrices_dict[i]["previousClose"]=temp["previousClose"]
         count+=1;
-    # print(stockPrices_dict)   
+    # print(stockPrices_dict)
     # stockPrices_dict = dict(zip(stock_names, list(stockPrices_dict.values())))
     # stockPrices_dict=getLivePrices(symbols)
     return render(response, "main/stockslist.html",{"prices":stockPrices_dict})
 
 def portfolio(response):
     sl=Stock.objects.filter(investor=response.user)
-    
+
     return render(response, "main/portfolio.html",{"sl":sl})
 
 def addstocks(response,name):
@@ -108,39 +111,39 @@ def makePredictions(response,name):
     # index_future_dates = list(pred.index)
     final_dict = dict(zip(date_time[:10], pred))
     # dataJSON = dumps(final_dict)
-    print(pred)
-    
+    print(final_dict)
 
-    data =  [
-            ['Year', 'Sales', 'Expenses'],
-            [2004, 1000, 400],
-            [2005, 1170, 460],
-            [2006, 660, 1120],
-            [2007, 1030, 540]
-        ]
+
+    data = [['Dates', 'Price']]
+    for key, value in final_dict.items():
+        data.append([key, value])
+    print("\n\n\n\n\n\n\n", data, "\n\n\n\n\n")
+
+    print(type(data[1][0]))
+    print(data[1][0])
+    # data =  [
+    #         ['Year', 'Sales', 'Expenses'],
+    #         [2004, 1000, 400],
+    #         [2005, 1170, 460],
+    #         [2006, 660, 1120],
+    #         [2007, 1030, 540]
+    #     ]
     # DataSource object
     data_source = SimpleDataSource(data=data)
     # Chart object
     chart = LineChart(data_source)
+    print(type(chart))
+    # chart = flot.LineChart(data_source)
     context = {'chart': chart}
     return render(response, 'main/graph.html', context)
-    # print(dataJSON)
-    # return render(response, 'main/graph.html', {'final_dict':final_dict })
-    # pred = pred[dt.datetime.now():]
-    # index_future_dates = list(pred.index)
-    # pred=pred.iloc[-10:]
-    # pred = pred.tolist()
-    
-    # final_dict = dict(zip(index_future_dates[-10:], pred))
-    # return render(response, 'main/home.html', {'values':pred, 'final_dict':final_dict })
 
 def getLivePrices(name):
     nse=Nse()
     q=nse.get_quote(name)
     # print(q)
     # stock_names={
-    #     "State Bank of India (SBIN)":"SBIN", 
-    #     "Housing Development Finance Corporation Limited(HDFC)":"HDFC", 
+    #     "State Bank of India (SBIN)":"SBIN",
+    #     "Housing Development Finance Corporation Limited(HDFC)":"HDFC",
     #     "Reliance Industries Limited(RELIANCE)":"RELIANCE",
     #     "Tata Motors Limited(TATAMOTORS)":"TATAMOTORS",
     #     "Aurobindo Pharma Limited(AUROPHARMA)":"AUROPHARMA",
@@ -161,6 +164,6 @@ def getLivePrices(name):
     # for key,value in stock_names:
     #     if value in symbols:
     #         temp.append(key)
-    # # print(stockPrices_dict)   
+    # # print(stockPrices_dict)
     # stockPrices_dict = dict(zip(new_temp, list(stockPrices_dict.values())))
     return q
