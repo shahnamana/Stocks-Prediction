@@ -121,6 +121,10 @@ def makePredictions(response,name):
 
     print(type(data[1][0]))
     print(data[1][0])
+
+    for i in range(1, len(data)):
+        data[i][0] = data[i][0][:-5]
+
     # data =  [
     #         ['Year', 'Sales', 'Expenses'],
     #         [2004, 1000, 400],
