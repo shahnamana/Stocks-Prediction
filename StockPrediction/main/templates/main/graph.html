@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<script src="http://yui.yahooapis.com/3.10.0/build/yui/yui-min.js"></script>
+{{ chart.as_html }}
+<!-- <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+<script>
+	var prices = JSON.parse("{{final_dict|escapejs}}");
+	window.onload = function (prices) {
+	
+	var chart = new CanvasJS.Chart("chartContainer");
+	chart.options.theme="light2";
+	chart.options.animationEnabled= true;
+	chart.options.axisX={
+		title: "Dates",
+	interval: 1,
+	intervalType: "month",
+	valueFormatString: "DD MMM"
+	};
+	chart.options.axisY={
+	title: "Price (in Rupees)",
+	includeZero: false,
+	minimum: 345,
+	maximun: 365	
+	};
+	
+	chart.options.title = { text: "State Bank of India" };
+	var series1 = { //dataSeries - first quarter
+        type: "line",
+		markerSize: 12,
+		xValueFormatString: "DD MMM, YYYY",
+		
+    };
+	
+	chart.options.data=[];
+	chart.options.data.push(series1);
+	series1.dataPoints=[];
+	for(var key in prices){
+		series1.dataPoints.push({x:key, y:prices[key]});
+	}
+	chart.render();
+	
+	}
+	</script>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> -->
+<div class="container">
+	{%for key, value in final_dict.items%}
+		{{key}} {{value}} <br>
+	{%endfor%}
+</div>
+{% endblock %}

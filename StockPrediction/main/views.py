@@ -4,6 +4,9 @@ from .models import Stock
 from statsmodels.tsa.arima_model import ARIMAResults
 from django.contrib import messages
 from nsetools import Nse
+from json import dumps
+from graphos.sources.simple import SimpleDataSource
+from graphos.renderers.yui import LineChart
 import pandas as pd
 import datetime as dt
 
@@ -84,9 +87,9 @@ def workdays(d, end, excluded=(6, 7)):
         d += dt.timedelta(days=1)
     return days
 
-def makePredictions(response):
+def makePredictions(response,name):
     # filename = r"C:\Users\Jay\Desktop\jay_C\jay projects\MIP\Stocks-Prediction\StockPrediction\HDFC_model.pkl"
-    filename = "./HDFC_model.pkl"
+    filename = "./"+name+"_model.pkl"
     loaded = ARIMAResults.load(filename)
     # index_future_dates = pd.date_range(start=dt.datetime.now(), end=dt.datetime.now()+dt.timedelta(days=20))
     # pred = loaded.predict(start=2038, end=2038+len(index_future_dates)-1, typ="levels").rename("ARIMA PREDICTIONS")
@@ -104,7 +107,25 @@ def makePredictions(response):
     date_time = [curDT.strftime("%d/%m/%Y") for curDT in dates]
     # index_future_dates = list(pred.index)
     final_dict = dict(zip(date_time[:10], pred))
-    return render(response, 'main/home.html', {'values':pred, 'final_dict':final_dict })
+    # dataJSON = dumps(final_dict)
+    print(pred)
+    
+
+    data =  [
+            ['Year', 'Sales', 'Expenses'],
+            [2004, 1000, 400],
+            [2005, 1170, 460],
+            [2006, 660, 1120],
+            [2007, 1030, 540]
+        ]
+    # DataSource object
+    data_source = SimpleDataSource(data=data)
+    # Chart object
+    chart = LineChart(data_source)
+    context = {'chart': chart}
+    return render(response, 'main/graph.html', context)
+    # print(dataJSON)
+    # return render(response, 'main/graph.html', {'final_dict':final_dict })
     # pred = pred[dt.datetime.now():]
     # index_future_dates = list(pred.index)
     # pred=pred.iloc[-10:]
