@@ -111,16 +111,16 @@ def makePredictions(response,name):
     # index_future_dates = list(pred.index)
     final_dict = dict(zip(date_time[:10], pred))
     # dataJSON = dumps(final_dict)
-    print(final_dict)
+    # print(final_dict)
 
 
     data = [['Dates', 'Price']]
     for key, value in final_dict.items():
         data.append([key, value])
-    print("\n\n\n\n\n\n\n", data, "\n\n\n\n\n")
+    # print("\n\n\n\n\n\n\n", data, "\n\n\n\n\n")
 
-    print(type(data[1][0]))
-    print(data[1][0])
+    # print(type(data[1][0]))
+    # print(data[1][0])
 
     for i in range(1, len(data)):
         data[i][0] = data[i][0][:-5]
@@ -136,9 +136,9 @@ def makePredictions(response,name):
     data_source = SimpleDataSource(data=data)
     # Chart object
     chart = LineChart(data_source)
-    print(type(chart))
+    # print(type(chart))
     # chart = flot.LineChart(data_source)
-    context = {'chart': chart}
+    context = {'chart': chart, 'name':name}
     return render(response, 'main/graph.html', context)
 
 def getLivePrices(name):

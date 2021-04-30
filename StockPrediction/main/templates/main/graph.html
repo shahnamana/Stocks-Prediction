@@ -5,10 +5,13 @@
 <script type="text/javascript">
     google.load("visualization", "1", {packages:["corechart"]});
 </script>
-
+<center>
+	<h2>{{name}}</h2>
+	{{ chart.as_html }}	
+</center>
 
 <!-- <script src="http://yui.yahooapis.com/3.10.0/build/yui/yui-min.js"></script> -->
-{{ chart.as_html }}
+
 
 
 <!-- <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
