@@ -46,10 +46,13 @@ def stockslist(response):
         stockPrices_dict[i]["dayLow"]=temp["dayLow"]
         stockPrices_dict[i]["previousClose"]=temp["previousClose"]
         count+=1;
+    current_date=dt.datetime.now()
+    current_date=current_date.strftime("%d/%m/%Y")
+    # print(current_date)
     # print(stockPrices_dict)
     # stockPrices_dict = dict(zip(stock_names, list(stockPrices_dict.values())))
     # stockPrices_dict=getLivePrices(symbols)
-    return render(response, "main/stockslist.html",{"prices":stockPrices_dict})
+    return render(response, "main/stockslist.html",{"prices":stockPrices_dict,"current_date":current_date})
 
 def portfolio(response):
     sl=Stock.objects.filter(investor=response.user)
@@ -133,17 +136,30 @@ def makePredictions(response,name):
     #         [2007, 1030, 540]
     #     ]
     # DataSource object
+    min_date=data[1][0]
+    max_date=''
+    min=data[1][1]
+    max=0
+    for i in range(1,len(data)):
+        if data[i][1]>max:
+            max=data[i][1]
+            max_date=data[i][0]
+        if data[i][1]<min:
+            min=data[i][1]
+            min_date=data[i][0]
+    # print("Max: "+str(max)+" Min: "+str(min))
     data_source = SimpleDataSource(data=data)
     # Chart object
     chart = LineChart(data_source)
     # print(type(chart))
     # chart = flot.LineChart(data_source)
-    context = {'chart': chart, 'name':name}
+    context = {'chart': chart, 'name':name, "max":max, "min":min,"max_date":max_date, "min_date":min_date}
     return render(response, 'main/graph.html', context)
 
 def getLivePrices(name):
     nse=Nse()
     q=nse.get_quote(name)
+    # print(q)
     # print(q)
     # stock_names={
     #     "State Bank of India (SBIN)":"SBIN",
