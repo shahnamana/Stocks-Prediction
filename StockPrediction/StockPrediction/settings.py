@@ -54,7 +54,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'StockPrediction.urls'
-
+CSRF_FAILURE_VIEW = 'register.views.csrf_failure'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
