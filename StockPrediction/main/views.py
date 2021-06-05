@@ -101,7 +101,7 @@ def makePredictions(response,name):
     # pred = loaded.predict(start=2038, end=2038+len(index_future_dates)-1, typ="levels").rename("ARIMA PREDICTIONS")
     # print(pred)
     index_future_dates = workdays(dt.datetime(2021, 3, 25), dt.datetime.now() + dt.timedelta(days=20))
-    pred = loaded.predict(start=2038, end=2037+len(index_future_dates), typ='levels').rename('ARIMA PREDICTIONS')
+    pred = loaded.predict(start=2084, end=2083+len(index_future_dates), typ='levels').rename('ARIMA PREDICTIONS')
     # print(pred)
     pred.index = index_future_dates
     pred = pred[dt.datetime.now():]
